@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Waterfall Build.unity
     guid: 36d037986246c8a4b862bee8020cbd27
+  - enabled: 1
+    path: Assets/Scenes/Waterfall Greybox.unity
+    guid: 2421c5d6af1c553478770f0379e7ecdb
   m_configObjects: {}

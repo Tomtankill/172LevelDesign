@@ -6,44 +6,37 @@ using System.IO;
 public class PhotoMechanic : MonoBehaviour
 {
 
-    public KeyCode screenCaptureKey = KeyCode.F2;
-    public string ScreenCapDirectory;
-    public string ScreenCapName = "PictureTaken";
-    public string fileType = ".png";
-    private int count;
-    private int ScreenCaps;
+    public KeyCode screenCaptureKey = KeyCode.F;
+    string folderPath = Directory.GetCurrentDirectory() + "/Screenshots/";
 
     // Start is called before the first frame update
     void Start()
     {
-        count = 0;
-        ScreenCaps = 0;
-        ScreenCapDirectory = Application.persistentDataPath;
+        
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        ScreenCaps = (FindScreenCaptures(ScreenCapDirectory, ScreenCapName));
-        if (Input.GetKeyDown(screenCaptureKey))
-        {
-            ScreenCapture.CaptureScreenshot(ScreenCapDirectory + ScreenCapName + (ScreenCaps + 1) + fileType);
-            Debug.Log("ScreenCapture Taken!");
-            Debug.Log("ScreenCap Location: " + ScreenCapDirectory);
+    void Update() {
+        if (Input.GetKeyDown(screenCaptureKey)) {
+            Debug.Log("KeyPressed");
+            TakeScreenshot();
         }
-    }
-    
-    int FindScreenCaptures(string DirectoryPath, string FileName)
-    {
-        count = 0;
-        for (int i = 0; i < Directory.GetFiles(DirectoryPath).Length; i++)
-        {
-            if (Directory.GetFiles(DirectoryPath)[i].Contains(FileName))
-            {
-                count += 1;
-            }
-        }
-        return count;
     }
 
+    public void TakeScreenshot() {
+
+        if (!System.IO.Directory.Exists(folderPath))
+            System.IO.Directory.CreateDirectory(folderPath);
+       
+        var screenshotName =
+                                 "Screenshot_" +
+                                 System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") +
+                                 ".png";
+        ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(folderPath, screenshotName));
+        Debug.Log(folderPath + screenshotName);
+    }
+
+    public void ShowExplorer() {
+        System.Diagnostics.Process.Start(folderPath);
+    }
 }
